@@ -1,9 +1,7 @@
 package com.pracore.user.controllers;
 
-import com.pracore.user.models.Hobby;
 import com.pracore.user.models.User;
 import com.pracore.user.models.UserRequestBody;
-import com.pracore.user.repositories.HobbyRepository;
 import com.pracore.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +16,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private HobbyRepository hobbyRepository;
-
     @GetMapping("/users")
-
     public List<User> index() {
         List<User> users = userService.all();
         return users;
-    }
-
-    @GetMapping("/hobbies")
-    public List<Hobby> hobbies() {
-        return hobbyRepository.findAll();
     }
 
     @PostMapping("/users")

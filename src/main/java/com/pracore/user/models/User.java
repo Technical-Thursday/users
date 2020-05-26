@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "users")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "users"})
 public class User implements Serializable {
     @Id
 //  TODO: Learn about GenerationType
@@ -30,7 +30,16 @@ public class User implements Serializable {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role roleId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
-    private List<UserHobby> userHobbies;
+//    Using User hobbies entity
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
+//    private List<UserHobby> userHobbies;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_hobby",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "hobby_id"))
+    private List<Hobby> userHobbies;
+
 }
 
