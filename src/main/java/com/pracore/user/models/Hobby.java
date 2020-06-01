@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "hobby")
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "userHobbies"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "users"})
 public class Hobby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Hobby {
 
     private String hobbyName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hobby", fetch = FetchType.LAZY)
-    private List<UserHobby> userHobbies;
+    @ManyToMany(mappedBy = "userHobbies", fetch = FetchType.LAZY)
+    private List<User> users;
 
 }
