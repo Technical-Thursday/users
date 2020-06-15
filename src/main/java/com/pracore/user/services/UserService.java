@@ -62,6 +62,7 @@ public class UserService {
     /**
      * /propagation/supported
      */
+    @Transactional
     public void transaction2() {
         this.createUser("2");
         hobbyService.transaction2();

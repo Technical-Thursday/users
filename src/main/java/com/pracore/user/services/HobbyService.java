@@ -25,6 +25,7 @@ public class HobbyService {
      * Create if needed collaboration
      * Result: both entries did not inserted
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public void transaction1() {
         Hobby hobby = new Hobby();
         hobby.setHobbyName("transaction1");
@@ -36,9 +37,9 @@ public class HobbyService {
      * /propagation/supported
      * I need support, I cannot start my transaction
      * If called from @transaction method both entries did not insert.
-     * If called from non @Transactional method then caller db entry get inserted hobby insertion failed
+     * If called from non @Transactional method both inserted
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void transaction2() {
         Hobby hobby = new Hobby();
         hobby.setHobbyName("transaction2");
