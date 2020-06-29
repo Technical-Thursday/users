@@ -42,4 +42,34 @@ public class UserController {
         Boolean isDeleted = userService.delete(userId);
         return ResponseEntity.ok(isDeleted);
     }
+
+    @GetMapping("/propagation/required")
+    public void transaction1() {
+        userService.transaction1();
+    }
+
+    @GetMapping("/propagation/supported")
+    public void transaction12() {
+        userService.transaction2();
+    }
+
+    @GetMapping("/propagation/unsupported")
+    public void transaction3() {
+        userService.transaction3();
+    }
+
+    @GetMapping("/propagation/requiredNew")
+    public void transaction4() {
+        userService.transaction4();
+    }
+
+    @GetMapping("/propagation/mandatory")
+    public void transaction5() {
+        userService.transaction5();
+    }
+
+    @GetMapping("/propagation/never")
+    public void transaction6() {
+        userService.transaction6();
+    }
 }
