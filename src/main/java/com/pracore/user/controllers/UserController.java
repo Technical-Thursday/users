@@ -17,9 +17,9 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public List<User> index() {
+    public User index() {
         List<User> users = userService.all();
-        return users;
+        return users.get(0);
     }
 
     @PostMapping("/users")

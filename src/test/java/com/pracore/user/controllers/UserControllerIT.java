@@ -7,21 +7,26 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = UserApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = UserApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class UserControllerIT {
 
     @Autowired
     RestTemplate restTemplate;
 
+    @LocalServerPort
+    private int port;
+
     @Test
     public void contextLoads() {
-        List<User> response = (List<User>) restTemplate.getForEntity("http://localhost:8080", List.class);
+        ResponseEntity<User> response = restTemplate.getForEntity("http://localhost:"+ port +"/users", User.class);
         Assert.assertTrue(response != null);
         assert (true);
     }
