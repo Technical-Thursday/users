@@ -40,8 +40,7 @@ public class UserService {
         user1.setLastName(user.getLastName());
         Role role = roleRepository.getOne(user.getRoleId());
         user1.setRoleId(role);
-        userRepository.save(user1);
-        return null;
+        return userRepository.save(user1);
     }
 
     public boolean delete(int id) {
