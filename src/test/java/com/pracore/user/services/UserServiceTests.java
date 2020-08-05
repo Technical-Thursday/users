@@ -43,19 +43,19 @@ public class UserServiceTests {
 	
 	@Test
 	public void test_getAllUser() {
-		User user1 = new User();
-		user1.setId(1);
-		user1.setFirstName("user1");
-		user1.setLastName("last1");
+		User dummyUser1 = new User();
+		dummyUser1.setId(1);
+		dummyUser1.setFirstName("user1");
+		dummyUser1.setLastName("last1");
 		
-		User user2 = new User();
-		user2.setId(2);
-		user2.setFirstName("user2");
-		user2.setLastName("last2");
+		User dummyUser2 = new User();
+		dummyUser2.setId(2);
+		dummyUser2.setFirstName("user2");
+		dummyUser2.setLastName("last2");
 
 		List<User> dummyUsers =  new ArrayList<>();
-		dummyUsers.add(user1);
-		dummyUsers.add(user2);
+		dummyUsers.add(dummyUser1);
+		dummyUsers.add(dummyUser2);
 		
 		when(userRepository.findAll()).thenReturn(dummyUsers);
 
@@ -71,7 +71,6 @@ public class UserServiceTests {
 		User dummyUser = new User();
 		dummyUser.setFirstName("Test User");
 		dummyUser.setLastName("1");
-
 
 		User savedUser = new User();
 		savedUser.setFirstName(dummyUser.getFirstName());
