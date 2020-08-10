@@ -6,6 +6,8 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pracore.stubs.RoleStub;
+import com.pracore.stubs.UserStub;
 import com.pracore.user.models.Role;
 import com.pracore.user.models.User;
 import com.pracore.user.models.UserRequestBody;
@@ -91,14 +93,9 @@ public class UserServiceTests {
 		rUserRequestBody.setLastName("Update");
 		rUserRequestBody.setRoleId(1);
 
-		User dbExistingUser = new User();
-		dbExistingUser.setId(1);
-		dbExistingUser.setFirstName("John");
-		dbExistingUser.setLastName("Smith");
+		User dbExistingUser = new UserStub();
 
-		Role uRole = new Role();
-		uRole.setId(1);
-		uRole.setRole("Admin");
+		Role uRole = new RoleStub();
 
 		User resultUser =  new User();
 		resultUser.setId(rUserRequestBody.getId());

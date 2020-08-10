@@ -17,6 +17,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    
     @Autowired
     private RoleRepository roleRepository;
 
@@ -25,7 +26,7 @@ public class UserService {
 
 
     public List<User> all() {
-        List<User> users;
+        List<User> users; 
         users = userRepository.findAll();
         return users;
     }
