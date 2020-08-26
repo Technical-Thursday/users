@@ -1,11 +1,5 @@
 package com.pracore.user.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.pracore.stubs.RoleStub;
 import com.pracore.stubs.UserStub;
 import com.pracore.user.models.Role;
@@ -13,9 +7,11 @@ import com.pracore.user.models.User;
 import com.pracore.user.models.UserRequestBody;
 import com.pracore.user.repositories.RoleRepository;
 import com.pracore.user.repositories.UserRepository;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,17 +20,20 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.MockitoRule;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTests {
-	
+
 	@Spy
 	@InjectMocks
 	private UserService userService;
 
 	@Mock
 	private UserRepository userRepository;
-	
+
 	@Mock
 	private RoleRepository roleRepository;
 
@@ -42,14 +41,17 @@ public class UserServiceTests {
 	private HobbyService hobbyService;
 
 	@Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-	
+
+	@Rule
+  public ExpectedException thrown = ExpectedException.none();
+
 	@Test
 	public void test_getAllUser() {
 		User dummyUser1 = new User();
 		dummyUser1.setId(1);
 		dummyUser1.setFirstName("user1");
 		dummyUser1.setLastName("last1");
-		
+
 		User dummyUser2 = new User();
 		dummyUser2.setId(2);
 		dummyUser2.setFirstName("user2");
@@ -58,11 +60,11 @@ public class UserServiceTests {
 		List<User> dummyUsers =  new ArrayList<>();
 		dummyUsers.add(dummyUser1);
 		dummyUsers.add(dummyUser2);
-		
+
 		when(userRepository.findAll()).thenReturn(dummyUsers);
 
 		List<User> users = userService.all();
-		
+
 		assertEquals(users, dummyUsers);
 
 	}
@@ -95,6 +97,7 @@ public class UserServiceTests {
 
 		User dbExistingUser = new UserStub();
 
+
 		Role uRole = new RoleStub();
 
 		User resultUser =  new User();
@@ -110,5 +113,25 @@ public class UserServiceTests {
 
 		// Run it and test it
 		assertEquals(userService.update(rUserRequestBody, 1), resultUser);
+	}
+
+	@Test
+	public void testSaveUserFail() {
+
+		User dummyUser = new User();
+		dummyUser.setFirstName("Test User");
+		dummyUser.setLastName("1");
+
+		User savedUser = new User();
+		savedUser.setFirstName(dummyUser.getFirstName());
+		savedUser.setLastName(dummyUser.getLastName());
+		savedUser.setId(1);
+
+		when(userRepository.save(dummyUser)).thenThrow(RuntimeException.class);
+
+		thrown.expect(RuntimeException.class);
+		thrown.expectMessage("Got exception while trying to call create User.");
+
+		userService.create(dummyUser);
 	}
 }
