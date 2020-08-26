@@ -11,6 +11,11 @@ public class TestController {
     ArrayList<String> testSequence = new ArrayList<>();
 
     @GetMapping("/exception")
+    public void testingException3() {
+        throw new RuntimeException();
+    }
+
+    @GetMapping("/exception/custom")
     public ArrayList<String> testingException() {
        this.test1();
        this.test2();
