@@ -1,7 +1,12 @@
 package com.pracore.user.controllers;
 
 import com.pracore.user.utils.CustomException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
     ArrayList<String> testSequence = new ArrayList<>();
+
+    @Autowired
+    ResourceLoader resourceLoader;
+
 
     @GetMapping("/exception")
     public void testingException3() {
@@ -25,6 +34,15 @@ public class TestController {
     @GetMapping("/exception/{experience}")
     public Boolean testingException2(@PathVariable Integer experience) {
         return this.isEligible(experience);
+    }
+
+    @GetMapping("/readFile")
+    public String readFile() throws IOException{
+        Resource resource = resourceLoader.getResource("classpath:test.txt");
+        try(InputStream input = resource.getInputStream()) {
+            byte[] content = input.readAllBytes();
+            return new String(content);
+        }
     }
 
     public void test1() {
